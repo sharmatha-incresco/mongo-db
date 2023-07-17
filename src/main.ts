@@ -4,13 +4,18 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
 dotenv.config();
-const cors=require("cors")
+// const cors=require("cors")
 
 async function bootstrap() {
   {
     const app = await NestFactory.create(AppModule);
-    app.use(cors({origin:"http://localhost:3000/",
-    methods:["GET","POST","PUT","DELETE"]}))
+    app.enableCors({
+      origin: '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      allowedHeaders: 'Content-Type, Authorization',
+    });
+    // app.use(cors({origin:"http://localhost:3000/",
+    // methods:["GET","POST","PUT","DELETE"]}))
     const config = new DocumentBuilder()
       .setTitle('Operation')
       .setDescription('The crud API description')
