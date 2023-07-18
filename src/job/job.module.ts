@@ -1,23 +1,12 @@
-// cats.module.ts
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { JobController} from './job.controller';
-import { jobService } from './job.service';
 import { JobSchema } from './job.schema';
-import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { JobController } from './job.controller';
+import { JobService } from './job.service';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: 'job', schema: JobSchema }]),
-  //   ElasticsearchModule.register({
-  //     node: 'https://search-jobs-dev-kgd2gqal6pe6nrufnvugad5ybu.ap-south-1.es.amazonaws.com',
-  //     auth: {
-  //       username: 'admin',
-  //       password: 'Test@123',
-  //     },
-  //   }),
- ],
+  imports: [MongooseModule.forFeature([{ name: 'Job', schema: JobSchema }])],
   controllers: [JobController],
-  providers: [jobService],
+  providers: [JobService],
 })
-export class jobModule{}
+export class JobModule {}
