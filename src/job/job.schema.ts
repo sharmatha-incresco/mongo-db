@@ -24,4 +24,5 @@ export interface Job extends Document {
   language: string;
 }
 
-export const JobModel = model<Job>('Job', JobSchema);
+export const JobModelget = model<Job>('Jobget', JobSchema);
+export const JobModelpost = model<Job>('Jobpost', JobSchema);
