@@ -38,4 +38,5 @@ export class JobGetController {
       return this.jobGetService.findAll();
     }
   }
+  
 }

@@ -26,4 +26,10 @@ export class JobGetService {
   async findByDate(date: string): Promise<JobGet[]> {
     return this.jobGetModel.find({ date }).exec();
   }
+
+  async updateApplicantsCount(jobId: string, count: number): Promise<JobGet> {
+    const job = await this.jobGetModel.findById(jobId).exec();
+    job.applicantsCount = count;
+    return job.save();
+  }
 }
