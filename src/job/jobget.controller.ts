@@ -20,11 +20,17 @@ export class JobGetController {
   @ApiQuery({ name: 'company', type: String, required: false })
   @ApiQuery({ name: 'location', type: String, required: false })
   @ApiQuery({ name: 'date', type: String, required: false })
+  @ApiQuery({ name: 'skills', type: [String], required: false }) // Add skills query parameter
+  @ApiQuery({ name: 'experience', type: String, required: false }) // Add experience query parameter
+  @ApiQuery({ name: 'education', type: String, required: false }) // Add education query parameter
   async getJobsByFilter(
     @Query('position') position?: string,
     @Query('company') company?: string,
     @Query('location') location?: string,
     @Query('date') date?: string,
+    @Query('skills') skills?: string[], // Add skills parameter
+    @Query('experience') experience?: string, // Add experience parameter
+    @Query('education') education?: string, // Add education parameter
   ): Promise<JobGet[]> {
     if (position) {
       return this.jobGetService.findByPosition(position);
@@ -34,9 +40,14 @@ export class JobGetController {
       return this.jobGetService.findByLocation(location);
     } else if (date) {
       return this.jobGetService.findByDate(date);
+    } else if (skills && skills.length > 0) { // Check if skills exist and are not empty
+      return this.jobGetService.findBySkills(skills);
+    } else if (experience) { // Check if experience is provided
+      return this.jobGetService.findByExperience(experience);
+    } else if (education) { // Check if education is provided
+      return this.jobGetService.findByEducation(education);
     } else {
       return this.jobGetService.findAll();
     }
   }
-  
 }

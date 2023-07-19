@@ -27,6 +27,18 @@ export class JobGetService {
     return this.jobGetModel.find({ date }).exec();
   }
 
+  async findBySkills(skills: string[]): Promise<JobGet[]> {
+    return this.jobGetModel.find({ skills: { $in: skills } }).exec();
+  }
+
+  async findByExperience(experience: string): Promise<JobGet[]> {
+    return this.jobGetModel.find({ experience }).exec();
+  }
+
+  async findByEducation(education: string): Promise<JobGet[]> {
+    return this.jobGetModel.find({ education }).exec();
+  }
+
   async updateApplicantsCount(jobId: string, count: number): Promise<JobGet> {
     const job = await this.jobGetModel.findById(jobId).exec();
     job.applicantsCount = count;
