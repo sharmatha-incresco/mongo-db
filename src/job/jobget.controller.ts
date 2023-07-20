@@ -1,5 +1,5 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import { Controller, Get, Query, Param, Post, Body } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
 import { JobGet } from './jobget.schema';
 import { JobGetService } from './jobget.service';
 
@@ -49,5 +49,13 @@ export class JobGetController {
     } else {
       return this.jobGetService.findAll();
     }
+  }
+
+  @Post('/updateApplicantsCount/:jobId')
+  @ApiOperation({ summary: 'Update applicants count for a job' })
+  @ApiParam({ name: 'jobId', type: String }) // Fix the error by adding this import
+  @ApiBody({ type: Number, description: 'New applicants count' }) // Fix the error by adding this import
+  async updateApplicantsCount(@Param('jobId') jobId: string, @Body() count: number): Promise<JobGet> {
+    return this.jobGetService.updateApplicantsCount(jobId, count);
   }
 }
