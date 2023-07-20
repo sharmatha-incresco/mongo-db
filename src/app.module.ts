@@ -11,7 +11,6 @@ import { JobPostService } from './job/jobpost.service';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb+srv://sharmatha:123@cluster0.fbajy5t.mongodb.net/jobget'),
-    MongooseModule.forRoot('mongodb+srv://sharmatha:123@cluster0.fbajy5t.mongodb.net/jobpost'),
     MongooseModule.forFeature([{ name: 'JobGet', schema: JobGetSchema }]),
     MongooseModule.forFeature([{ name: 'JobPost', schema: JobPostSchema }]),
   ],
