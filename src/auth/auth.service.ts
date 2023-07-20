@@ -20,8 +20,8 @@ export class AuthService {
 
     constructor() {
         this.userPool = new CognitoUserPool({
-            UserPoolId: "eu-north-1_IZkCTImRI",
-            ClientId: "38ncc8oubhbdf1re7pketealba",
+            UserPoolId: "ap-south-1_k2vj4kMdF",
+            ClientId: "55e91rkot9l1ee977c6ga026qj",
         });
     }
 
