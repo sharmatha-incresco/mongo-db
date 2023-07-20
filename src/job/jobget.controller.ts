@@ -1,7 +1,8 @@
 import { Controller, Get, Query, Param, Post, Body } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery, ApiParam, ApiBody } from '@nestjs/swagger';
-import { JobGet } from './jobget.schema';
 import { JobGetService } from './jobget.service';
+import { JobGet } from './jobget.schema';
+import { UpdateApplicantsCountDto } from './jobget.dto';
 
 @Controller('job/get')
 @ApiTags('Job Get')
@@ -20,17 +21,17 @@ export class JobGetController {
   @ApiQuery({ name: 'company', type: String, required: false })
   @ApiQuery({ name: 'location', type: String, required: false })
   @ApiQuery({ name: 'date', type: String, required: false })
-  @ApiQuery({ name: 'skills', type: [String], required: false }) // Add skills query parameter
-  @ApiQuery({ name: 'experience', type: String, required: false }) // Add experience query parameter
-  @ApiQuery({ name: 'education', type: String, required: false }) // Add education query parameter
+  @ApiQuery({ name: 'skills', type: [String], required: false })
+  @ApiQuery({ name: 'experience', type: String, required: false })
+  @ApiQuery({ name: 'education', type: String, required: false })
   async getJobsByFilter(
     @Query('position') position?: string,
     @Query('company') company?: string,
     @Query('location') location?: string,
     @Query('date') date?: string,
-    @Query('skills') skills?: string[], // Add skills parameter
-    @Query('experience') experience?: string, // Add experience parameter
-    @Query('education') education?: string, // Add education parameter
+    @Query('skills') skills?: string[],
+    @Query('experience') experience?: string,
+    @Query('education') education?: string,
   ): Promise<JobGet[]> {
     if (position) {
       return this.jobGetService.findByPosition(position);
@@ -40,11 +41,11 @@ export class JobGetController {
       return this.jobGetService.findByLocation(location);
     } else if (date) {
       return this.jobGetService.findByDate(date);
-    } else if (skills && skills.length > 0) { // Check if skills exist and are not empty
+    } else if (skills && skills.length > 0) {
       return this.jobGetService.findBySkills(skills);
-    } else if (experience) { // Check if experience is provided
+    } else if (experience) {
       return this.jobGetService.findByExperience(experience);
-    } else if (education) { // Check if education is provided
+    } else if (education) {
       return this.jobGetService.findByEducation(education);
     } else {
       return this.jobGetService.findAll();
@@ -53,9 +54,12 @@ export class JobGetController {
 
   @Post('/updateApplicantsCount/:jobId')
   @ApiOperation({ summary: 'Update applicants count for a job' })
-  @ApiParam({ name: 'jobId', type: String }) // Fix the error by adding this import
-  @ApiBody({ type: Number, description: 'New applicants count' }) // Fix the error by adding this import
-  async updateApplicantsCount(@Param('jobId') jobId: string, @Body() count: number): Promise<JobGet> {
-    return this.jobGetService.updateApplicantsCount(jobId, count);
+  @ApiParam({ name: 'jobId', type: String })
+  @ApiBody({ type: UpdateApplicantsCountDto, description: 'New applicants count' })
+  async updateApplicantsCount(
+    @Param('jobId') jobId: string,
+    @Body() updateApplicantsCountDto: UpdateApplicantsCountDto,
+  ): Promise<JobGet> {
+    return this.jobGetService.updateApplicantsCount(jobId, updateApplicantsCountDto.count);
   }
 }
