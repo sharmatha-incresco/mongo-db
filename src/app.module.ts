@@ -6,8 +6,7 @@ import { JobGetController } from './job/jobget.controller';
 import { JobPostController } from './job/jobpost.controller';
 import { JobGetService } from './job/jobget.service';
 import { JobPostService } from './job/jobpost.service';
-import { AuthService } from './auth/auth.service';
-import { AuthController } from './auth/auth.controller';
+import { AuthModule } from './auth/auth.module';// Replace 'path/to/auth.module' with the actual path to your auth.module.ts file
 
 @Module({
   imports: [
@@ -15,8 +14,9 @@ import { AuthController } from './auth/auth.controller';
     MongooseModule.forRoot('mongodb+srv://sharmatha:123@cluster0.fbajy5t.mongodb.net/jobpost'),
     MongooseModule.forFeature([{ name: 'JobGet', schema: JobGetSchema }]),
     MongooseModule.forFeature([{ name: 'JobPost', schema: JobPostSchema }]),
+    AuthModule, // Add the AuthModule to the imports array
   ],
-  controllers: [JobGetController, JobPostController,AuthController],
-  providers: [JobGetService, JobPostService,AuthService],
+  controllers: [JobGetController, JobPostController],
+  providers: [JobGetService, JobPostService],
 })
 export class AppModule {}
