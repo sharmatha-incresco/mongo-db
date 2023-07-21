@@ -39,9 +39,9 @@ export class JobGetService {
     return this.jobGetModel.find({ education }).exec();
   }
 
-  async updateApplicantsCount(jobId: string, count: number): Promise<JobGet> {
+  async incrementApplicantsCount(jobId: string): Promise<JobGet> {
     const job = await this.jobGetModel.findById(jobId).exec();
-    job.applicantsCount = count;
+    job.applicantsCount += 1;
     return job.save();
   }
 }
