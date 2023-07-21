@@ -52,14 +52,14 @@ export class JobGetController {
     }
   }
 
-  @Post('/updateApplicantsCount/:jobId')
+  
+  @Post('/updateApplicantsCount')
   @ApiOperation({ summary: 'Update applicants count for a job' })
-  @ApiParam({ name: 'jobId', type: String })
-  @ApiBody({ type: UpdateApplicantsCountDto, description: 'New applicants count' })
+  @ApiBody({ type: UpdateApplicantsCountDto, description: 'New applicants count and jobId' })
   async updateApplicantsCount(
-    @Param('jobId') jobId: string,
     @Body() updateApplicantsCountDto: UpdateApplicantsCountDto,
   ): Promise<JobGet> {
-    return this.jobGetService.updateApplicantsCount(jobId, updateApplicantsCountDto.count);
+    const { jobId, count } = updateApplicantsCountDto;
+    return this.jobGetService.updateApplicantsCount(jobId, count);
   }
 }
