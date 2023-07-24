@@ -1,16 +1,17 @@
-service: opensearch-index-creator
+# service: opensearch-index-creator
 
-provider:
-  name: aws
-  runtime: nodejs14.x
-  stage: dev
-  region: us-east-1
+# provider:
+#   name: aws
+#   runtime: nodejs14.x
+#   stage: dev
+#   region: us-east-1
 
-functions:
-  createIndex:
-    handler: dist/main.handler
-    events:
-      - http:
-          path: create-index
-          method: post
-          cors: true
+# functions:
+#   createIndex:
+#     handler: dist/main.handler
+#     events:
+#       - http:
+#           path: create-index
+#           method: post
+#           cors: true
+# 
